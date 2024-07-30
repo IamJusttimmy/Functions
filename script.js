@@ -113,7 +113,6 @@ greet('Hello')('Timmy');
 //Challenge: Rewriting it in Arrow function
 const greetArr = greeting => name => console.log(`${greeting} ${name}`);
 greet('Hi')('Timmy');
-*/
 
 ////////////////////////
 //The call and aply method
@@ -191,3 +190,57 @@ lufthansa.buyPlanes = function () {
 document
   .querySelector('.buy')
   .addEventListener('click', lufthansa.buyPlanes.bind(lufthansa));
+
+//Partial application
+
+const addTax = (rate, value) => value + value * rate;
+conaole.log(addTax(0.1, 200));
+
+const addVAT = addTax.bind(null, 0.23);
+//addVAT = value => value + value * 0.23;
+
+console.log(addVAT(100));
+console.log(addVAT(23));
+*/
+
+////////////////////////////
+//Coding Challenge
+
+const poll = {
+  question: 'What is your favourite prgramming language?',
+  options: ['0: JavaScript', '1: Python', '2: Rust', '3: C++'],
+  //The answer generates [0, 0, 0, 0].
+  answers: new Array(4).fill(0),
+  registerNewAnswer() {
+    //Get Answer
+    const answer = Number(
+      prompt(
+        `${this.question}\n${this.options.join('\n')}\n(Write Option Number)`
+      )
+    );
+    console.log(answer);
+
+    // Register Number
+    typeof answer === 'number' &&
+      answer < this.answers.length &&
+      this.answers[answer]++;
+
+    this.displayResults();
+    this.displayResults('string');
+  },
+  displayResults(type = 'array') {
+    if (type === 'array') {
+      console.log(this, answers);
+    } else if (type === 'string') {
+      // poll results are 13, 2, 4, 1
+      console.log(`Poll results are ${this.answers.join(', ')}`);
+    }
+  },
+};
+//poll.registerNewAnswer();
+
+document
+  .querySelector('.poll')
+  .addEventListener('click', poll.registerNewAnswer.bind(poll));
+
+poll.displayResults.call({ answers: [5, 2, 3] }, 'string');
